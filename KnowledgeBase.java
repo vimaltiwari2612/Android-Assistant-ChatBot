@@ -30,7 +30,7 @@ public class KnowledgeBase
 		RandomAccessFile raf = new RandomAccessFile(fileName, "rw");
 		long fileLength = raf.length();
 		raf.seek(fileLength);
-		String toBeWritten="\n";
+		String toBeWritten="";
 		for(Map.Entry<String,String> entry : newKnowledge.entrySet()) {
 			  String key = entry.getKey();
   			  String value = entry.getValue();
