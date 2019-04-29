@@ -1,26 +1,30 @@
 import java.util.*;
 import java.text.*;
 
+import java.util.Locale; 
+import javax.speech.Central; 
+import javax.speech.synthesis.Synthesizer; 
+import javax.speech.synthesis.SynthesizerModeDesc; 
+
 public class ChatBot
 {
-	public TreeMap<String,String> quesResponseMap=null;
-	public TreeMap<String,String> localQuesResponseMap=null;
-	public Set<String> questions=null;
-	public Collection<String> answers=null;
-	public String botAnswer="";
-	public String chatHistory="";
-	public String username="";
+	private TreeMap<String,String> quesResponseMap=null;
+	private TreeMap<String,String> localQuesResponseMap=null;
+	private Set<String> questions=null;
+	private Collection<String> answers=null;
+	private String botAnswer="";
+	private String chatHistory="";
+	private String username="";
 	
-	public static final String BOT_INTRO="Hi! I am ChatBot 1.0 \nEnter your name ...\n";
-	public static final String SORRY_RESPONSE = "Sorry! I did't get you.";
-	public static final String SYSTEM_ERROR ="Sorry! there is an error in my system.";
-	public static final String LEARN_REQUEST ="WHat should be my answer to this statement?";
-	public static final String EXIT ="BYE! Have a nice day.";
-	public static final String DATABASE ="KnowledgeBase.txt";
-	public static final String BOT_NAME="Bot : ";
-	
+	private static final String BOT_INTRO="Hi! I am ChatBot 1.0 \nEnter your name ...\n";
+	private static final String SORRY_RESPONSE = "Sorry! I did't get you.";
+	private static final String SYSTEM_ERROR ="Sorry! there is an error in my system.";
+	private static final String LEARN_REQUEST ="WHat should be my answer to this statement?";
+	private static final String EXIT ="BYE! Have a nice day.";
+	private static final String DATABASE ="KnowledgeBase.txt";
+	private static final String BOT_NAME="Bot : ";
 
-	public ChatBot() throws Exception
+	private ChatBot() throws Exception
 	{
 		this.quesResponseMap=KnowledgeBase.getKnowledgeBase(ChatBot.DATABASE);
 		this.localQuesResponseMap = new TreeMap<String,String>();
@@ -33,15 +37,17 @@ public class ChatBot
 			}
 	}
 
-	public String saveQuestionAndResponse(String question , String response)
+	private String saveQuestionAndResponse(String question , String response)
 	{
-		this.quesResponseMap.put(question,response);
-		this.localQuesResponseMap.put(question,response);
+		if(!question.trim().isEmpty() && !response.trim().isEmpty()) {
+			this.quesResponseMap.put(question,response);
+			this.localQuesResponseMap.put(question,response);
+		}
 		this.botAnswer="Okey. Got it!";
 		return this.botAnswer;
 	}	
 
-	public String getResponse(String question)
+	private String getResponse(String question)
 	{
 		double globalRank=0.200;
 		String localQuestion="";
@@ -71,7 +77,7 @@ public class ChatBot
 	}
 
 
-	public void checkExit(String exitStmt) throws Exception
+	private void checkExit(String exitStmt) throws Exception
 	{
 		if(exitStmt.toLowerCase().contains("exit"))
 		{
@@ -83,14 +89,15 @@ public class ChatBot
 		}
 	}
 		
-	public static void main(String arg[]) throws Exception
-	{
+	public static void main(String arg[]) throws Exception{
 		Scanner sc= new Scanner(System.in);
 		ChatBot cb= new ChatBot();
-		System.out.println(ChatBot.BOT_INTRO);
+		print(ChatBot.BOT_INTRO);
+		speak(ChatBot.BOT_INTRO);
 		cb.username=sc.nextLine();
 		cb.chatHistory += "\n\n"+ChatBot.BOT_NAME+"Hi "+cb.username+". How can I help you?\r\n";
-		System.out.println("\n\n"+ChatBot.BOT_NAME+"Hi "+cb.username+". How can I help you?");
+		print("\n\n"+ChatBot.BOT_NAME+"Hi "+cb.username+". How can I help you?");
+		speak("Hi "+cb.username+". How can I help you?");
 		while(true)
 		{
 			System.out.print(cb.username+" : ");
@@ -99,7 +106,7 @@ public class ChatBot
 			cb.checkExit(question.trim());
 			String response = cb.getResponse(question);
 			cb.chatHistory += ChatBot.BOT_NAME+response+"\r\n";
-			System.out.println(ChatBot.BOT_NAME+response);
+			print(ChatBot.BOT_NAME+response);
 			if(response.toLowerCase().contains("sorry"))
 			{
 				System.out.print(cb.username+" : ");
@@ -107,15 +114,45 @@ public class ChatBot
 				cb.chatHistory += cb.username+" : "+response;
 				cb.checkExit(response.trim());
 				cb.chatHistory += ChatBot.BOT_NAME+cb.saveQuestionAndResponse(question,response)+"\r\n";
-				System.out.println(ChatBot.BOT_NAME+cb.saveQuestionAndResponse(question,response));
+				print(ChatBot.BOT_NAME+cb.saveQuestionAndResponse(question,response));
 			}
 	
 		}
-	
 	}
 
 
+	private static void print(String content){
+		System.out.println(content);
+	}
+	
+	public static void speak(String content)
+	{ 
+		try{
+			// set property as Kevin Dictionary 
+			System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory"); 
+				
+			// Register Engine 
+			Central.registerEngineCentral("com.sun.speech.freetts.jsapi.FreeTTSEngineCentral"); 
 
+			// Create a Synthesizer
+			Synthesizer synthesizer = Central.createSynthesizer(new SynthesizerModeDesc(Locale.ROOT));	
+			
+			// Allocate synthesizer 
+			synthesizer.allocate();		 
+			
+			// Resume Synthesizer 
+			synthesizer.resume();	 
+			
+			// speaks the given text until queue is empty. 
+			synthesizer.speakPlainText(content, null);	
+			synthesizer.waitEngineState(Synthesizer.QUEUE_EMPTY); 
+			
+			// Deallocate the Synthesizer. 
+			synthesizer.deallocate();	
+		}catch(Exception e){
+			
+		}			
+	}	
 	
 	
 }
