@@ -1,8 +1,9 @@
 # ChatBot
 
-Its a basic level bot that uses the Levenshtein distance algorithm to perform better.
+It''s a basic level bot that uses 
 
-Text to speech is added for making it more interective. voice is text speech is still in progress.
+1. the Levenshtein distance algorithm.
+2. Text to speech.
 
 Interact with it and make it learn new things.
 
