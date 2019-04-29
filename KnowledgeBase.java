@@ -32,8 +32,8 @@ public class KnowledgeBase
 		raf.seek(fileLength);
 		String toBeWritten="";
 		for(Map.Entry<String,String> entry : newKnowledge.entrySet()) {
-			  String key = entry.getKey();
-  			  String value = entry.getValue();
+			  String key = entry.getKey().trim();
+  			  String value = entry.getValue().trim();
 			  toBeWritten += key+" ~ "+value+"\r\n";
 			}
 		raf.writeBytes(toBeWritten);
@@ -42,7 +42,6 @@ public class KnowledgeBase
 	
 	public static void saveLogs(String chat,String username) throws Exception 
 	{
-		
 		File dir = new File(System.getProperty("user.dir")+"/logs");
 		dir.mkdir();
 		Date date = new Date() ;
