@@ -9,7 +9,7 @@ Interact with it and make it learn new things.
 
 # how to run
 
-1. for compilation :  javac -cp freetts-1.2.2.jar;. *.java
-2. for running :  java -cp freetts-1.2.2.jar;. ChatBot
+1. download the zip from git.
+2. click on chat.bat
 
 ![screenshot](https://github.com/vimaltiwari2612/ChatBot/blob/master/Capture.PNG)
