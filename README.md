@@ -14,9 +14,9 @@ Interact with it and make it learn new things.
 1. uses SQLITE DB to save responses.
 2. used [CHAT UI](https://github.com/timigod/android-chat-ui) for reference.
 
-[Assistant Apk]()
+[Assistant Apk](https://github.com/vimaltiwari2612/ChatBot/blob/master/Android%20Impl/Assistant.apk?raw=true)
 
-![screenshot]()
+![screenshot](https://github.com/vimaltiwari2612/ChatBot/blob/master/Android%20Impl/1.PNG)
 
 # Command Line
 
