@@ -1,7 +1,6 @@
 # ChatBot 
 
-
-It''s a basic level bot that uses 
+It's a basic level bot that uses 
 
 1. the Levenshtein distance algorithm.
 2. Text to speech.
@@ -9,7 +8,7 @@ It''s a basic level bot that uses
 Interact with it and make it learn new things.
 
 ***It has 2 variants***
-# Android 
+# Android Assistant
 
 1. uses SQLITE DB to save responses.
 2. used [CHAT UI](https://github.com/timigod/android-chat-ui) for reference.
@@ -17,6 +16,8 @@ Interact with it and make it learn new things.
 [Assistant Apk](https://github.com/vimaltiwari2612/ChatBot/blob/master/Android%20Impl/Assistant.apk?raw=true)
 
 ![screenshot](https://github.com/vimaltiwari2612/ChatBot/blob/master/Android%20Impl/1.PNG)
+
+[Demo](https://github.com/vimaltiwari2612/ChatBot/blob/master/bandicam%202020-05-22%2018-01-58-802.mp4?raw=true)
 
 # Command Line
 
